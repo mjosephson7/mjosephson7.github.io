@@ -1,0 +1,73 @@
+#about {
+    text-align: center; /* Center-align the About Me section */
+    color: #ffffff;
+    padding: 50px;
+    
+}
+
+#about h2 {
+    font-size: 2.5em; /* Increase font size to match Experiences */
+    text-align: left;
+    font-weight: bold;
+    margin-right: 20px; /* Add space between header and content */
+}
+
+.about-container {
+    display: flex;
+    align-items: flex-start;
+    margin-top: 40px;
+}
+
+.about-left {
+    flex: 1;
+    text-align: center;
+    padding-right: 40px;
+}
+
+.about-right {
+    flex: 2;
+    text-align: left;
+    margin-left: 40px;
+}
+
+
+
+.contact-info {
+    margin-top: 20px; /* Ensures space between the image and text */
+    text-align: left;
+}
+
+.headshot img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Makes the image circular */
+    object-fit: cover;
+    border: 3px solid #ddd;
+    transform:scale(1.4)
+}
+
+.contact-info {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.contact-info p {
+    margin: 5px 0;
+}
+
+.contact-info a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+}
+
+/* Divider style */
+.divider {
+    width: 1px;
+    background: #ddd;
+    height: 100%;
+}
+

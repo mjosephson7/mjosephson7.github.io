@@ -1,0 +1,52 @@
+/* experiences.css */
+
+#experiences {
+    margin-left: 180px;
+    padding: 50px;
+    color: #c0c0c0;
+    background-color: #1a1a2e;
+    margin-top: -450px; /* Remove gap between experiences and about */
+}
+
+#experiences h2 {
+    color: #ffffff;
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+.experience {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding: 20px;
+    background-color: #1f1f3d;
+    border-radius: 10px;
+}
+
+.experience-date {
+    width: 100px; /* Adjust width as necessary */
+    text-align: right;
+    color: #7f8c8d;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.experience-content {
+    flex: 1;
+}
+
+.experience-content h3 {
+    font-size: 1.2em;
+    color: #ffffff;
+    margin: 0 0 10px;
+}
+
+.experience-content h3 a {
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.experience-content p {
+    color: #c0c0c0
+}
+
