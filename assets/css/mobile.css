@@ -3,20 +3,24 @@
 /* Apply styles for devices with a screen width of 768px or less */
 @media (max-width: 768px) {
 
+    /* Prevent horizontal scrolling */
+    html, body {
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
     /* General layout adjustments for mobile */
     body {
         padding: 10px;
         margin-bottom: 60px; /* Add space for the bottom navigation */
     }
 
-    /* Adjusting section paddings */
-    section {
-        padding: 20px 10px;
-    }
-
     /* Header styling for mobile */
     header {
         padding: 40px 20px;
+        width: 100%;
+        display: block;
     }
     header h1 {
         font-size: 1.8em;
@@ -25,48 +29,113 @@
     /* Mobile view for the About section */
     #about {
         padding: 20px;
+        text-align: center;
+        width: 100%;
+        display: block;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto; /* Center the About section within the viewport */
     }
     #about h2 {
         font-size: 1.8em;
         text-align: center;
     }
     .about-container {
-        flex-direction: column; /* Stack items vertically */
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        text-align: center;
+        width: 100%;
+        max-width: 100%; /* Prevent overflow */
+        padding: 10px 0;
+        margin: 0; /* Ensure no extra margin */
+        box-sizing: border-box;
     }
     .about-left, .about-right {
-        margin: 0;
+        width: 100%; /* Make each part take full width */
+        max-width: 90%; /* Center content within section */
+        margin: 0 auto; /* Center each side within the container */
         padding: 10px 0;
+    }
+    .headshot img {
+        max-width: 150px;
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+        margin-bottom: 10px;
     }
 
     /* Mobile view for the Experiences section */
     #experiences {
-        margin-left: 0; /* Remove left margin for full width */
+        margin-left: 0;
         padding: 20px;
+        width: 100%;
+        display: block;
+        margin-top: 0; /* Ensure the section starts immediately after the About section */
+        margin-bottom: 850px; /* Add space below the Experiences section */
     }
     #experiences h2 {
         font-size: 1.8em;
         text-align: center;
     }
     .experience {
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         padding: 15px;
+        width: 100%;
+        margin-bottom: 20px;
     }
     .experience-date {
-        width: auto;
-        text-align: left;
+        width: 100%;
+        text-align: center;
         margin-bottom: 10px;
     }
-
-    /* Project box adjustments */
-    .project-link .experience {
-        padding: 15px;
-        border-radius: 5px;
+    .experience-content {
+        width: 90%; /* Center and slightly reduce width */
+        text-align: center;
     }
-    .project-link:hover .experience {
-        border-color: #ffffff;
+
+    /* Projects Section */
+    #projects {
+        margin-left: 0;
+        padding: 20px;
+        width: 100%;
+        display: block;
+        margin: 0 auto;
+        margin-top: 50px; /* Ensure the section starts below the Experiences section */
+        margin-bottom: 30px;
+        clear: both; /* Clear floats to ensure it stays below Experiences */
+        
+    }
+    #projects h2 {
+        font-size: 1.8em;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .project-link {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px; /* Add space between each project */
+        text-decoration: none; /* Remove underline for links */
+    }
+    .project-link .experience {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px;
+        background-color: #1f1f3d;
+        border-radius: 10px;
+        width: 90%; /* Centered and slightly narrower */
+        box-sizing: border-box;
+        text-align: center;
+    }
+    .project-link h3 {
+        color: #ffffff;
+        font-size: 1.4em;
+        margin-bottom: 10px;
+    }
+    .project-link p {
+        color: #c0c0c0;
     }
 
     /* Font adjustments for readability */
@@ -79,9 +148,11 @@
 
     /* Mobile adjustments for the skills section */
     .skills {
+        display: flex;
         flex-wrap: wrap;
         gap: 8px;
         justify-content: center;
+        width: 100%;
     }
     .skill {
         padding: 5px 8px;
@@ -92,37 +163,40 @@
     footer {
         padding: 20px;
         text-align: center;
+        width: 100%;
     }
 
-    /* Make the side menu horizontal on mobile */
+    /* Horizontal menu bar at the bottom */
     .side-menu {
         position: fixed;
         bottom: 0;
         left: 0;
-        width: 100%; /* Full width of the screen */
-        height: auto; /* Adjust height to fit the content */
+        width: 100%;
+        height: 50px;
         background-color: #333;
         display: flex;
-        flex-direction: row; /* Horizontal layout */
-        justify-content: space-around; /* Space out menu items */
-        padding: 10px 0;
-        border-top: 2px solid #444; /* Optional: Top border for separation */
-        z-index: 1000; /* Make sure it stays above other elements */
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        padding: 5px 0;
+        border-top: 2px solid #444;
+        z-index: 1000;
     }
 
     /* Style each menu link */
     .menu-link {
         color: #fff;
         text-decoration: none;
-        padding: 10px 15px;
+        padding: 10px;
         font-weight: bold;
-        font-size: 0.9em; /* Adjust font size for mobile */
+        font-size: 0.9em;
         transition: background-color 0.3s;
+        white-space: nowrap;
     }
 
     /* Active and hover states */
     .menu-link.active {
-        background-color: #9370DB; /* Active section color */
+        background-color: #9370DB;
         color: #fff;
         border-radius: 5px;
     }
@@ -132,4 +206,3 @@
         border-radius: 5px;
     }
 }
-
