@@ -71,7 +71,7 @@
         width: 100%;
         display: block;
         margin-top: 0; /* Ensure the section starts immediately after the About section */
-        margin-bottom: 850px; /* Add space below the Experiences section */
+        margin-bottom: 900px; /* Add space below the Experiences section */
     }
     #experiences h2 {
         font-size: 1.8em;
