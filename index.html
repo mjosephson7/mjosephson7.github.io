@@ -1,222 +1,301 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matthew Josephson</title>
-    <link rel="stylesheet" href="assets/css/styles.css">
-    <link rel="stylesheet" href="assets/css/about.css">
-    <link rel="stylesheet" href="assets/css/experiences.css">
-    <link rel="stylesheet" href="assets/css/projects.css">
-    <link rel="stylesheet" href="assets/css/mobile.css">
-</head>
-<body>
-    <!-- Vertical Menu Bar -->
-    <nav class="side-menu">
-        <a href="#home" class="menu-link">Home</a>
-        <a href="#about" class="menu-link">About Me</a>
-        <a href="#experiences" class="menu-link">Experiences</a>
-        <a href="#projects" class="menu-link">Projects</a>
-    </nav>
-
-
-    <!-- Home Section -->
-    <header id="home">
-        <h1>Welcome to My Portfolio</h1>
-        <p>Hi, I'm Matthew Josephson, an aspiring Software Developer.</p>
-        <div class="button-container">
-            <a href="#projects" class="btn">View My Work</a>
-        </div>
-    </header>
-
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Me</h2>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Matthew Josephson</title>
         
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <script src="assets/js/script.js"></script>
 
+        <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
 
-        <div class="about-container">
-            
-            <!-- Left Side: Headshot and Contact Info -->
-            <div class="about-left">
-                <div class="headshot">
-                    <img src="assets/img/headshot2.jpg" alt="Your Name" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <body id="backgroundFill">
+        <div class="container">
+            <a name="top"></a>
+
+            <section>
+                <section id="top"></section>
+                <div class="mobileNav">
+                    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <ul class="navBar" id="myLinks">
+                        <li><a href="#top" class="navOver">Home</a></li>
+                        <li><a href="#aboutme">About Me</a></li>
+                        <li><a href="#experiences">Experiences</a></li>
+                        <li><a href="#projects">Projects</a></li>
+                    </ul>
                 </div>
-                <div class="contact-info">
-                    <p style="color: #1a1a2e;"> b   </p>
-                    <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/matthewjosephson" target="_blank">linkedin.com/in/matthewjosephson</a></p>
-                    <p><strong>GitHub:</strong> <a href="https://github.com/mjosephson7" target="_blank">github.com/mjosephson7</a></p>
-                </div>
-            </div>
+                
 
-            <!-- Divider -->
-            <div class="divider"></div>
+                <div id="innerWrap">
+                    <section class="hero">
+                        <div class="hero-content">
+                            <h1>Hi, I'm <span>Matthew Josephson</span></h1>
+                            <p>Computer Science Student | iOS App Developer | Full-Stack Enthusiast</p>
+                            <a href="#projects" class="cta-button">View My Projects</a>
+                        </div>
+                    </section>
+                    
+                    <!-- About me section-->
+                    <div>
+                        <section id="aboutme" class="section">
+                            <div class="row">
 
-            <!-- Right Side: About Me Text -->
-            <div class="about-right">
-                <p>I am a Computer Science student in my final year at Western University, with a minor in Classical Studies. 
-                I have a strong interest in iOS app development and experience as a full-stack developer. 
-                My technical skills include Python, Java, Swift, C, HTML, and graphic design, along with 
-                beginner-level mobile app development. I'm passionate about combining technology with creativity 
-                and always excited to tackle new projects.</p>           
-            </div>
-        </div>
-        
-    </section>
+                                <div class="column right" >
+                                    <div class="sectionWrap">
+                                        <div class="gapSmall"></div>
+                                        <h2>About Me</h2>
+                                        <p>
+                                            I am a Computer Science student in my final year at Western University, with a minor in Classical Studies. 
+                                            I have a strong interest in iOS app development and experience as a full-stack developer. 
+                                            My technical skills include Python, Java, Swift, C, HTML, and graphic design, along with 
+                                            beginner-level mobile app development. I'm passionate about combining technology with creativity 
+                                            and always excited to tackle new projects.
+                                        </p>  
+                                        
+                                        <p>
+                                            On the side, you’ll probably find me running, experimenting with new recipes (because cooking should be 
+                                            fun, especially in college), hitting the golf course, buying a new hat, or planning my next travel 
+                                            adventure. I’m a big believer that food brings people together—whether it’s whipping up a late-night 
+                                            snack with friends or perfecting a one-pan pasta that’s equal parts easy and delicious.
+                                        </p>
 
-    <section id="experiences">
-        <h2>Experiences</h2>
-    
-        <div class="experience">
-            <!-- Left side: Dates -->
-            <div class="experience-date">
-                <span>May 2023 — Sept 2024</span>
-            </div>
-            
-            <!-- Right side: Job details -->
-            <div class="experience-content">
-                <h3>Summer Student Intern · Orangeville Family Medical Centre <a href="#" target="_blank">↗</a></h3>
-                <p>BResponsible for hardware set up, data management and office network solutions. Developed a working 
-                    knowledge of PS Suite EMR.</p>
-                <div class="skills">
-                    <span class="skill">JavaScript</span>
-                    <span class="skill">TypeScript</span>
-                    <span class="skill">React</span>
-                    <span class="skill">Storybook</span>
-                </div>
-            </div>
-        </div>
-    
-        <!-- Repeat for more experiences -->
-        <div class="experience">
-        <div class="experience-date">
-                <span>2023 — 2023</span>
-            </div>
-            
-            <div class="experience-content">
-                <h3>Program Assistant · SHAD Canada <a href="https://www.shad.ca/" target="_blank">↗</a></h3>
-                <p>Worked at Memorial University of Newfoundland (MUN) as a Program Assistant for the SHAD program. 
-                    SHAD is a summer high school STEAM enrichment program. In this role I was responsible for the 
-                    education, mentorship, and safety of Shad participants throughout the program. I delivered and 
-                    helped to deliver various workshops on STEAM topics throughout the program.</p>
-                <div class="skills">
-                    <span class="skill">Public Speaking</span>
-                    <span class="skill">Mentoring</span>
-                    <span class="skill">Leadership</span>
-                </div>
-            </div>
-        </div>
+                                        <p>
+                                            I’m always looking to connect with new people, explore exciting opportunities, and share ideas—especially 
+                                            if they involve good food, great company, and a little creativity.
+                                        </p>
+                                        </div>
+                                </div>
+                                <div class="column left" >
+                                    <div class="headshot">
+                                        <img src="assets/img/headshot2.jpg" alt="Headshot" />
+                                    </div>
 
-        <div class="experience">
-            <div class="experience-date">
-                <span>2022 — 2022</span>
-            </div>
-            
-            <div class="experience-content">
-                <h3>Co-op Software Developer · Info-Tech Research Group <a href="https://www.infotech.com/" target="_blank">↗</a></h3>
-                <p>As a full-stack software developer I was responsible for working on multiple internal and external facing systems and 
-                    apps. I primarily worked with a stack consisting of: Ruby on Rails, VueJS, Javascript, HTML, CSS/SASS, MySQL, PostgreSQL 
-                    and Node.js. Within an AGILE working environment, analyzing requirements, architecting solutions and developing strong, 
-                    maintainable code.</p>
-                <div class="skills">
-                    <span class="skill">Ruby on Rails</span>
-                    <span class="skill">Node.js</span>
-                    <span class="skill">AGILE</span>
-                </div>
-            </div>
-        </div>
+                                    <div class="contact-info">
+                                        <p style="color: #1a1a2e;">    </p>
+                                        <p><strong>LinkedIn:</strong> <a href="https://linkedin.com/in/matthewjosephson" target="_blank">linkedin.com/in/matthewjosephson</a></p>
+                                        <p><strong>GitHub:</strong> <a href="https://github.com/mjosephson7" target="_blank">github.com/mjosephson7</a></p>
+                                    </div>
 
-        <div class="experience">
-            <div class="experience-date">
-                <span>2021 — 2021</span>
-            </div>
-            
-            <div class="experience-content">
-                <h3>Interim Research Analyst · Info-Tech Research Group <a href="https://www.infotech.com/" target="_blank">↗</a></h3>
-                <p>Developed user-friendly interfaces and collaborated with teams to improve product usability. Focused on building 
-                    responsive web applications and enhancing the user experience.</p>
-                <div class="skills">
-                    <span class="skill">MS Power Automate</span>
-                    <span class="skill">MS Excel</span>
-                    <span class="skill">MS Powerpoint</span>
-                </div>
-            </div>
-        </div>
-    
-    </section>
-    
-    
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>My Projects</h2>
-        
-        <a href="https://github.com/username" target="_blank" class="project-link">
-            <div class="experience">
-                <div class="project-content">
-                    <h3 style="color: white;"">iOS RunTracker App <a</a></h3>
-                    <p>Used Microsoft Power Automate to build automation processes in
-                    MS Excel and Salesforce. Created detailed competitor and market research 
-                    compiled in MS PowerPoint presentations. Efficiently updated weekly customer 
-                    RoundTable report statistics, for internal and external use. Collaborated to 
-                    develop and create a new database, and moved data from the old database into the new one.</p>
-                    <div class="skills">
-                        <span class="skill">Swift</span>
-                        <span class="skill">Tracking</span>
-                        <span class="skill"></span>
+                                </div>
+                                
+                            </div>
+                        </section>
                     </div>
-                </div>
-            </div>
-        </a>
 
-        <a href="https://github.com/mjosephson7/WebWordleGame" target="_blank" class="project-link">
-            <div class="experience">
-                <div class="project-content">
-                    <h3 style="color: white;"">Web Wordle Game <a</a></h3>
-                    <p> A C++ based web browser WebWordle game, inspired by the popular New York Times Wordle Game.
-                        In this game, players have six attempts to guess a five-letter word. After each guess, tiles 
-                        change color to indicate accuracy: green for a correct letter in the right position, yellow 
-                        for a correct letter in the wrong position, and gray for an incorrect letter. Players win by 
-                        guessing the word within six tries; otherwise, the correct word is revealed. WebWordle is accessible 
-                        in any modern web browser.
-                    </p>
-                    <div class="skills">
-                        <span class="skill">C++</span>
-                        <span class="skill">WT</span>
-                        <span class="skill">Servers</span>
+                    <!-- Experiences section-->
+                    <div>
+                        <section id="experiences" class="section">
+                            <div class="sectionWrap">
+                                <div class="gap"></div>
+                                <h2>Experiences</h2>
+
+                                <div class="experience">
+                                    <div class="experience-date">
+                                        <span>May 2024 — Sept 2024</span>
+                                    </div>
+                                    
+                                    <div class="experience-content">
+                                        <h3>Technology Summer Student Intern · Orangeville Family Medical Centre <a href="https://dafht.ca/clinics/orangeville-family-medical-centre/" target="_blank">↗</a></h3>
+                                        <p>During my internship, I contributed to the clinic's technological advancement by managing and assisting a software upgrade, ensuring seamless integration 
+                                            and minimal disruption to daily operations. Additionally, I helped improve patient satisfaction 
+                                            by efficiently coordinating aftercare appointments as directed by physicians, supporting positive 
+                                            health outcomes and patient trust and satisfaction.</p>
+                                        <div>
+                                            <span class="skill">Communication</span>
+                                            <span class="skill">Reliability</span>
+                                            <span class="skill">PS Suite EMR</span>
+                                            <span class="skill">Technical Support</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="experience">
+                                    <div class="experience-date">
+                                        <span>May 2023 — Dec 2023</span>
+                                    </div>
+                                    
+                                    <div class="experience-content">
+                                        <h3>Summer Student Intern · Orangeville Family Medical Centre <a href="https://dafht.ca/clinics/orangeville-family-medical-centre/" target="_blank">↗</a></h3>
+                                        <p>Gained hands-on experience with the Telus Health PS Suite Electronic Medical Record system, 
+                                            building a solid foundation in healthcare technology. Took responsibility for hardware setup, 
+                                            data management tasks, and implementing office network solutions, contributing to a more 
+                                            efficient and connected workplace environment.</p>
+                                        <div>
+                                            <span class="skill">PS Suite EMR</span>
+                                            <span class="skill">Technical Support</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="experience">
+                                    <div class="experience-date">
+                                            <span>Jun 2023 — July 2023</span>
+                                        </div>
+                                        
+                                        <div class="experience-content">
+                                            <h3>Program Assistant · SHAD Canada <a href="https://www.shad.ca/" target="_blank">↗</a></h3>
+                                            <p>Worked at Memorial University of Newfoundland (MUN) as a Program Assistant for the SHAD program. 
+                                                SHAD is a summer high school STEAM enrichment program. In this role I was responsible for the 
+                                                education, mentorship, and safety of Shad participants throughout the program. I delivered and 
+                                                helped to deliver various workshops on STEAM topics throughout the program.</p>
+                                            <div>
+                                                <span class="skill">Public Speaking</span>
+                                                <span class="skill">Mentoring</span>
+                                                <span class="skill">Leadership</span>
+                                                <span class="skill">Teaching</span>
+                                                <span class="skill">Team Building</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="experience">
+                                        <div class="experience-date">
+                                            <span>2022 — 2022</span>
+                                        </div>
+                                        
+                                        <div class="experience-content">
+                                            <h3>Co-op Software Developer · Info-Tech Research Group <a href="https://www.infotech.com/" target="_blank">↗</a></h3>
+                                            <p>As a full-stack software developer I was responsible for working on multiple internal and external facing systems and 
+                                                apps. I primarily worked with a stack consisting of: Ruby on Rails, VueJS, Javascript, HTML, CSS/SASS, MySQL, PostgreSQL 
+                                                and Node.js. Within an AGILE working environment, analyzing requirements, architecting solutions and developing strong, 
+                                                maintainable code.</p>
+                                            <div>
+                                                <span class="skill">Ruby on Rails</span>
+                                                <span class="skill">Node.js</span>
+                                                <span class="skill">AGILE Methodologies</span>
+                                                <span class="skill">MySQL</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="experience">
+                                        <div class="experience-date">
+                                            <span>2021 — 2021</span>
+                                        </div>
+                                        
+                                        <div class="experience-content">
+                                            <h3>Interim Research Analyst · Info-Tech Research Group <a href="https://www.infotech.com/" target="_blank">↗</a></h3>
+                                            <p>Developed user-friendly interfaces and collaborated with teams to improve product usability. Focused on building 
+                                                responsive web applications and enhancing the user experience.</p>
+                                            <div>
+                                                <span class="skill">MS Power Automate</span>
+                                                <span class="skill">MS Excel</span>
+                                                <span class="skill">MS Powerpoint</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </section>
                     </div>
-                </div>
-            </div>
-        </a>
 
-        <a href="https://github.com/mjosephson7/freeCellSolver" target="_blank" class="project-link">
-            <div class="experience">
-                <div class="project-content">
-                    <h3 style="color: white;"">Free Cell Solitare Solver <a</a></h3>
-                    <p> Free Cell Solitare Solver, using an depth first search model to 
-                        solve. The program allows for you to put a preset deck of cards 
-                        into the program, or you can drag and drop in the GUI.
-                    </p>
-                    <div class="skills">
-                        <span class="skill">Python</span>
-                        <span class="skill">AI Model</span>
-                        <span class="skill">GUI</span>
+                    <!-- Projects section-->
+                    <div>
+                        <section id="projects" class="section">
+                            <div class="sectionWrap">
+                                <div class="gap"></div>
+                                <h2>Projects</h2>
+
+                                <a href="https://github.com/mjosephson7/freeCellSolver" target="_blank" class="project-link">
+                                    <div class="projects">
+                                        <div class="project-content">
+                                            <h3>Free Cell Solitare Solver</h3>
+                                            <p>
+                                                Free Cell Solitare Solver, using an depth first search model to 
+                                                solve. The program allows for you to put a preset deck of cards 
+                                                into the program, or you can drag and drop in the GUI.
+                                            </p>
+                                            <div class="skills">
+                                                <span class="skill">Python</span>
+                                                <span class="skill">AI Model</span>
+                                                <span class="skill">GUI</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="https://github.com/mjosephson7/TCP-UDPChatroom" target="_blank" class="project-link">
+                                    <div class="projects">
+                                        <div class="project-content">
+                                            <h3>TCP/UDP Chatroom</h3>
+                                            <p>
+                                                This project showcases a Python-based implementation of both TCP and UDP chat servers and clients, 
+                                                enabling real-time messaging for multiple users. It features broadcasting messages, handling multiple client 
+                                                connections, and seamless server shutdowns, with both TCP or UDP algorithms.
+                                            </p>
+                                            <div class="skills">
+                                                <span class="skill">Network Programming</span>
+                                                <span class="skill">Multithreading</span>
+                                                <span class="skill">Python</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="https://github.com/mjosephson7/WebWordleGame" target="_blank" class="project-link">
+                                    <div class="projects">
+                                        <div class="project-content">
+                                            <h3>Web Wordle Game</h3>
+                                            <p>
+                                                A C++ based web browser WebWordle game, inspired by the popular New York Times Wordle Game.
+                                                In this game, players have six attempts to guess a five-letter word. After each guess, tiles 
+                                                change color to indicate accuracy: green for a correct letter in the right position, yellow 
+                                                for a correct letter in the wrong position, and gray for an incorrect letter. Players win by 
+                                                guessing the word within six tries; otherwise, the correct word is revealed. WebWordle is accessible 
+                                                in any modern web browser.
+                                            </p>
+                                            <div class="skills">
+                                                <span class="skill">C++</span>
+                                                <span class="skill">WT</span>
+                                                <span class="skill">Servers</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+
+                                <a href="https://github.com/mjosephson7" target="_blank" class="project-link">
+                                    <div class="projects">
+                                        <div class="project-content">
+                                            <h3>iOS RunTracker App</h3>
+                                            <p>
+                                                Used Microsoft Power Automate to build automation processes in MS Excel and Salesforce. 
+                                                Created detailed competitor and market research compiled in MS PowerPoint presentations. 
+                                                Efficiently updated weekly customer RoundTable report statistics, for internal and external use. 
+                                                Collaborated to develop and create a new database, and moved data from the old database into the new one.
+                                            </p>
+                                            <div class="skills">
+                                                <span class="skill">Swift</span>
+                                                <span class="skill">Location Tracking</span>
+                                                <span class="skill">Interface Design</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                                
+                            </div>
+                        </section>
                     </div>
+
+                    <!-- Future website expansion-->
+                    <div></div>
+
+                    <div>
+                        <footer class="footer">
+                            <p>Created by Matthew Josephson &copy; 2024</p>
+                        </footer>
+                    </div>
+
+
                 </div>
-            </div>
-        </a>
-    
-    </section>
 
-    
-    
-        
+            </section>
 
-    <!-- Footer -->
-    <footer>
-        <p>© 2024 @MatthewJosephson</p>
-    </footer>
-
-    <script src="assets/js/script.js"></script>
-</body>
+        </div>
+        <script src="assets/js/script.js"></script>
+    </body>
 </html>
