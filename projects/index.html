@@ -1,0 +1,598 @@
+\<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Project Directory</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: #f8fafc;
+      min-height: 100vh;
+      color: #1a202c;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      min-height: 100vh;
+      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05);
+    }
+
+    .header {
+      background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+      color: white;
+      padding: 3rem 2rem 2rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .title-section {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .folder-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+
+    .subtitle {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      opacity: 0.8;
+      font-weight: 400;
+    }
+
+    .header-stats {
+      text-align: right;
+      opacity: 0.9;
+    }
+
+    .projects-section {
+      padding: 2rem;
+    }
+
+    .section-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .section-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.25rem;
+    }
+
+    .section-description {
+      font-size: 0.9rem;
+      color: #718096;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .project-card:hover {
+      border-color: #cbd5e0;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transform: translateY(-1px);
+    }
+
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .project-info {
+      flex: 1;
+    }
+
+    .project-name {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 0.25rem;
+      text-transform: capitalize;
+    }
+
+    .project-type {
+      font-size: 0.75rem;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+
+    .project-icon {
+      width: 40px;
+      height: 40px;
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .project-file {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #4a5568;
+      font-size: 0.875rem;
+      margin-bottom: 1.25rem;
+      padding: 0.5rem 0.75rem;
+      background: #f7fafc;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .file-icon {
+      font-size: 0.875rem;
+      opacity: 0.7;
+    }
+
+    .project-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #2d3748;
+      color: white;
+      text-decoration: none;
+      padding: 0.625rem 1.25rem;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      border: 1px solid #2d3748;
+    }
+
+    .project-link:hover {
+      background: #1a202c;
+      border-color: #1a202c;
+    }
+
+    .project-link-secondary {
+      background: white;
+      color: #4a5568;
+      border: 1px solid #e2e8f0;
+    }
+
+    .project-link-secondary:hover {
+      background: #f7fafc;
+      border-color: #cbd5e0;
+      color: #2d3748;
+    }
+
+    .arrow-icon {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .footer-stats {
+      background: #f7fafc;
+      border-top: 1px solid #e2e8f0;
+      padding: 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-label {
+      font-size: 0.875rem;
+      color: #718096;
+      font-weight: 500;
+    }
+
+    .stat-description {
+      font-size: 0.75rem;
+      color: #a0aec0;
+      margin-top: 0.25rem;
+    }
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 2rem 1rem 1.5rem;
+      }
+
+      .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .header-stats {
+        text-align: left;
+      }
+
+      h1 {
+        font-size: 1.75rem;
+      }
+
+      .projects-section {
+        padding: 1.5rem 1rem;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .project-actions {
+        flex-direction: column;
+      }
+
+      .footer-stats {
+        padding: 1.5rem 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+      }
+    }
+
+    /* Subtle animations */
+    .project-card {
+      animation: fadeIn 0.3s ease-out forwards;
+      opacity: 0;
+    }
+
+    .project-card:nth-child(1) { animation-delay: 0.05s; }
+    .project-card:nth-child(2) { animation-delay: 0.1s; }
+    .project-card:nth-child(3) { animation-delay: 0.15s; }
+    .project-card:nth-child(4) { animation-delay: 0.2s; }
+    .project-card:nth-child(5) { animation-delay: 0.25s; }
+    .project-card:nth-child(6) { animation-delay: 0.3s; }
+    .project-card:nth-child(7) { animation-delay: 0.35s; }
+    .project-card:nth-child(8) { animation-delay: 0.4s; }
+    .project-card:nth-child(9) { animation-delay: 0.45s; }
+    .project-card:nth-child(10) { animation-delay: 0.5s; }
+    .project-card:nth-child(11) { animation-delay: 0.55s; }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="header-content">
+        <div class="title-section">
+          <div class="folder-icon">📁</div>
+          <div>
+            <h1>Project Directory</h1>
+            <p class="subtitle">Development projects and applications</p>
+          </div>
+        </div>
+        <div class="header-stats">
+          <div style="font-size: 1.25rem; font-weight: 600;">11</div>
+          <div style="font-size: 0.875rem; opacity: 0.8;">Active Projects</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects-section">
+      <div class="section-header">
+        <h2 class="section-title">Projects</h2>
+        <p class="section-description">Browse and access your development projects</p>
+      </div>
+
+      <div class="projects-grid">
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">LOAK</div>
+              <div class="project-type">PHP Application</div>
+            </div>
+            <div class="project-icon">🔐</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">📄</span>
+            <span>index.php</span>
+          </div>
+          <div class="project-actions">
+            <a href="firstGame/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+<!--  
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">AI TA</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">🤖</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="ai-ta/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">Battery</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">🔋</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="battery/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">Cambrian</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">🦕</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>cambrian.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="cambrian/cambrian.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">Communicator</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">💬</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="communicator/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">Countries</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">🌍</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="countries/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">Days</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">📅</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="days/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">Dhillon App</div>
+              <div class="project-type">PHP Application</div>
+            </div>
+            <div class="project-icon">📱</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">📄</span>
+            <span>index.php</span>
+          </div>
+          <div class="project-actions">
+            <a href="dhillon-app/index.php" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">E Flat</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">♪</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="eflat/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">Mood</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">😊</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="mood/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-header">
+            <div class="project-info">
+              <div class="project-name">NCLEX</div>
+              <div class="project-type">Web Application</div>
+            </div>
+            <div class="project-icon">🏥</div>
+          </div>
+          <div class="project-file">
+            <span class="file-icon">🌐</span>
+            <span>index.html</span>
+          </div>
+          <div class="project-actions">
+            <a href="nclex/index.html" class="project-link">
+              <span>Open Project</span>
+              <span class="arrow-icon">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-stats">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">11</div>
+          <div class="stat-label">Total Projects</div>
+          <div class="stat-description">Active development projects</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">9</div>
+          <div class="stat-label">HTML Projects</div>
+          <div class="stat-description">Web applications</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">2</div>
+          <div class="stat-label">PHP Projects</div>
+          <div class="stat-description">Server-side applications</div>
+        </div>
+      </div>
+    </div>
+-->
+  </div>
+</body>
+</html>
