@@ -865,17 +865,22 @@ function loadHighScores() {
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
-    <!-- Load Firebase config from external file -->
-    <script src="config.js"></script>
+    <!-- Load Firebase config -->
+    <script src="firebase-config.js"></script>
     
     <script>
-    // Initialize Firebase with config from external file
+    // Initialize Firebase with loaded configuration
     if (window.firebaseConfig) {
-        firebase.initializeApp(window.firebaseConfig);
-        window.db = firebase.firestore();
+        try {
+            firebase.initializeApp(window.firebaseConfig);
+            window.db = firebase.firestore();
+            console.log('Firebase initialized successfully');
+        } catch (error) {
+            console.error('Firebase initialization failed:', error);
+            window.db = null;
+        }
     } else {
-        console.error('Firebase config not found! Please create config.js file.');
-        // Fallback: disable online features
+        console.error('Firebase config not found!');
         window.db = null;
     }
     </script>
