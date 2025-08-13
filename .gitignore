@@ -1,0 +1,16 @@
+# Firebase configuration files (contains sensitive API keys)
+projects/firstGame/config.js
+
+# macOS
+.DS_Store
+
+# Node modules (if you add npm packages)
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+
+# Other sensitive configuration files
+*.env
+config.local.js
