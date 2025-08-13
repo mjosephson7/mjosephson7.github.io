@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Orangeville Family Medical Centre</title>
+        
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <script src="assets/js/script.js"></script>
+
+        
+
+        <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" media="(prefers-color-scheme: light)">
+        <link rel="icon" href="assets/img/favicon-dark.ico"type="image/x-icon" media="(prefers-color-scheme: dark)">
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <body id="backgroundFill">
+        
+        <!-- Password Protection Overlay -->
+        <div id="passwordOverlay" class="password-overlay">
+            <div class="password-container">
+                <h2>Access Required</h2>
+                <p>Please enter the password to access this site:</p>
+                <input type="password" id="passwordInput" placeholder="Enter password">
+                <button onclick="checkPassword()">Submit</button>
+                <div id="errorMessage" class="error-message"></div>
+            </div>
+        </div>
+
+        <!-- Main content (hidden by default) -->
+        <div id="mainContent" style="display: none;">
+
+    <!-- Sticky Navbar -->
+    <header class="navbar">
+        <div class="navbar-left">
+            <div class="logo">
+                <img src="assets/img/logo.jpg" alt="OFMC Logo">
+            </div>
+            <div class="title-group">
+                <h1 class="site-title">Orangeville Family Medical Centre</h1>
+                <p class="subtitle">Caring for Families, One Patient at a Time.</p>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <nav>
+                <a href="#" class="nav-link">Home</a>
+                <a href="#ouroffice" class="nav-link">Our Office</a>
+                <a href="#uninsuredTag" class="nav-link">Uninsured Services</a>
+                <a href="https://portal.healthmyself.net/ofmc/" target="_blank" class="nav-link">Pomelo</a>
+                <div class="dropdown">
+                  <button class="dropbtn nav-link">More</button>
+                  <div class="dropdown-content">
+                    <a href="ourdoctors.html">Our Doctors</a>
+                    <a href="https://dafht.ca/" target="_blank">DAHFT</a>
+                    <a href="#">Extra Tab</a>
+                  </div>
+                </div>
+
+            </nav>
+            <div class="phone">
+              <a href="tel:5199388000">519-938-8000</a>
+            </div>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                
+                <h1>We Are Committed to Your Health</h1>
+                <p>Same Day Appointments Available.</p>
+                <a href="https://portal.healthmyself.net/ofmc/" target="_blank" class="hero-button">Book an appointment through Pomelo</a>
+            </div>
+            <div class="hero-image">
+                <img src="assets/img/doctor.jpg" alt="Doctor" />
+            </div>
+        </section>
+
+        <!-- Location Section -->
+        <section class="location" id="ouroffice">
+            
+            <h2 class="title-heading">Visit Our Office</h2>
+            
+            <div class="location-wrapper" >
+                <a name="ouroffice"></a>
+                
+                
+                <div class="office-image">
+                    <img src="assets/img/office.png" alt="Office Photo">
+                </div>
+                <div class="office-info">
+                    
+                    <p><strong>Address:</strong> 1 Elizabeth Street, Suite 100, Orangeville, ON</p>
+                    <p><strong>Hours:</strong> Monday - Thursday, 8AM - 4PM</p>
+                    <p><strong>Phone:</strong> (519) 938-8000</p>
+                    <p><strong>Fax:</strong> (519) 938-8080</p>
+                    <div>
+                        <p>Please note that we are a Family Practice. You need a doctor here to book an appointment to be seen. </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="after-hours">
+          <div class="after-hours-wrapper">
+            <div class="after-hours-text">
+              <h2>Urgent After Hours Care</h2>
+              <p>If you need medical attention outside of our regular clinic hours, we’ve got you covered. Our team participates in a Family Health Organization which provides after-hours services to our registered patients.</p>
+                
+                
+              <p><strong>Please note, the clinic is for urgent matters only.</strong> For issues that are long standing or for prescription renewals, please contact your family doctor.</p>
+
+              <p><strong>Monday to Thursday:</strong> 5:00 PM - 7:30 PM</p>
+              <p><strong>Saturday:</strong> 8:00 AM - 11:00 PM</p>
+
+            </div>
+            
+          </div>
+        </section>
+
+        
+
+        <!-- Lab Services -->
+        <section class="lab-services">
+            <h2 class="title-heading">Lab Services</h2>
+            <div class="lab-wrapper">
+                <div class="lab-text">
+                    
+                    <p>You can get your lab work done right in our office. Dynacare has a technician on site in Orangeville five days a week.</p>
+                    <p><strong>Monday - Friday:</strong> 8:00 am - 3:15 pm</p>
+                    <p><strong>Closed daily for lunch from:</strong> 12:30 pm - 1:30 pm</p>
+                    <p><strong>Note: The lab is not open on weekends.</p>
+                </div>
+                <div class="lab-image">
+                    <img src="assets/img/lab.jpg" alt="Lab Technician">
+                </div>
+            </div>
+        </section>
+
+        <!-- Uninsured Services -->
+        <section class="uninsured-services" id="uninsuredTag">
+            <a name="uninsuredTag"></a>
+            
+            <h2 class="title-heading">Uninsured Services</h2>
+            <div class="uninsured-wrapper">
+                <div class="uninsured-text">
+                    
+                    <p>Some medical services are not covered by OHIP. These include things like sick notes, travel forms, insurance paperwork, and other administrative services. Please review our list of uninsured services for more details and associated fees.</p>
+                    <a href="assets/files/uninsured.pdf" class="uninsured-button" target="_blank">View Full List (PDF)</a>
+                </div>
+                <div class="uninsured-preview">
+                    <iframe src="assets/files/uninsured.pdf#toolbar=0" width="100%" height="400px" style="border: 1px solid #ccc;"></iframe>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Created by NextVision Digital &copy; 2025</p>
+    </footer>
+
+    </div> <!-- End mainContent -->
+
+    <!-- Delete when used for OFMC-->
+    <script>
+        // Password hash (SHA-256 of "medical123" - change this to your desired password)
+        const correctPasswordHash = "845271951f36aea7a4f5e58859177e0c9d4f501431c25945eac7da26b0be19b6";
+        
+        // Simple hash function (for demo - in production use proper crypto)
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+        
+        async function checkPassword() {
+            const password = document.getElementById('passwordInput').value;
+            const hashedPassword = await hashPassword(password);
+            
+            if (hashedPassword === correctPasswordHash) {
+                document.getElementById('passwordOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+                // Store in session to remember for this session
+                sessionStorage.setItem('authenticated', 'true');
+            } else {
+                document.getElementById('errorMessage').textContent = 'Incorrect password. Please try again.';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+        
+        // Check if already authenticated this session
+        window.onload = function() {
+            if (sessionStorage.getItem('authenticated') === 'true') {
+                document.getElementById('passwordOverlay').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
+            }
+        }
+        
+        // Allow Enter key to submit password
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
