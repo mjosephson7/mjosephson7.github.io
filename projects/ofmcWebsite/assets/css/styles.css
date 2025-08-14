@@ -5,6 +5,111 @@
     box-sizing: border-box;
 }
 
+/* Notification Banner */
+.notification-banner {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1001;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.notification-banner.yellow {
+    background-color: #fef3c7;
+    border-bottom: 2px solid #f59e0b;
+}
+
+.notification-banner.red {
+    background-color: #fee2e2;
+    border-bottom: 2px solid #ef4444;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.banner-message {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 1;
+}
+
+.banner-icon {
+    font-size: 1.1rem;
+}
+
+.yellow .banner-icon {
+    color: #d97706;
+}
+
+.red .banner-icon {
+    color: #dc2626;
+}
+
+.yellow #bannerText {
+    color: #92400e;
+    font-weight: 500;
+}
+
+.red #bannerText {
+    color: #991b1b;
+    font-weight: 500;
+}
+
+.banner-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 3px;
+    transition: background-color 0.2s;
+    font-size: 1rem;
+}
+
+.yellow .banner-close {
+    color: #d97706;
+}
+
+.red .banner-close {
+    color: #dc2626;
+}
+
+.yellow .banner-close:hover {
+    background-color: #fde68a;
+}
+
+.red .banner-close:hover {
+    background-color: #fecaca;
+}
+
+/* Scroll offset for anchor links to account for sticky navbar */
+html {
+    scroll-padding-top: 80px; /* Default offset for navbar */
+}
+
+/* When banner is visible, add extra offset */
+.banner-visible html {
+    scroll-padding-top: 130px; /* Navbar + banner height */
+}
+
+@media (max-width: 1225px) {
+    html {
+        scroll-padding-top: 70px; /* Mobile navbar height */
+    }
+    
+    .banner-visible html {
+        scroll-padding-top: 120px; /* Mobile navbar + banner height */
+    }
+}
+
+
+
 /* Password Protection Overlay */
 .password-overlay {
     position: fixed;
@@ -93,6 +198,11 @@
     font-family: 'Segoe UI', sans-serif;
 }
 
+/* When banner is visible, navbar sticks below it */
+.banner-visible .navbar {
+    top: 50px; /* Approximate banner height */
+}
+
 /* Left section (logo + title) */
 .navbar-left {
     display: flex;
@@ -136,7 +246,7 @@
     gap: 1rem;
 }
 
-nav {
+.nav-menu {
     display: flex;
     gap: 0.5rem;
 }
@@ -163,6 +273,229 @@ nav {
     color: #3a4a5b;
 }
 
+/* Mobile Menu Styles */
+.mobile-menu-btn {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.mobile-menu-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 3px;
+    background-color: #3a4a5b;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(1) {
+    transform: rotate(-45deg) translate(-6px, 6px);
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-menu-btn.active .hamburger-line:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -6px);
+}
+
+.desktop-phone {
+    display: block;
+}
+
+.mobile-phone {
+    display: none;
+}
+
+.desktop-nav {
+    display: flex;
+}
+
+.mobile-nav {
+    display: none;
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 1225px) {
+    .navbar {
+        padding: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .navbar-left {
+        flex: 1;
+    }
+    
+    .site-title {
+        font-size: 1.2rem;
+    }
+    
+    .subtitle {
+        font-size: 0.7rem;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+        z-index: 1001;
+    }
+    
+    /* Hide ALL desktop navigation elements */
+    .desktop-nav {
+        display: none !important;
+    }
+    
+    .desktop-phone {
+        display: none !important;
+    }
+    
+    /* Show mobile navigation */
+    .mobile-nav {
+        display: flex;
+    }
+    
+    .nav-menu.mobile-nav {
+        position: fixed;
+        top: 80px; /* Adjust based on navbar height */
+        right: -100%;
+        width: 300px;
+        height: calc(100vh - 80px);
+        background: white;
+        box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+        transition: right 0.3s ease;
+        overflow-y: auto;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
+    }
+    
+    .nav-menu.active {
+        right: 0;
+    }
+    
+    .banner-visible .nav-menu {
+        top: 130px; /* Adjust when banner is visible */
+        height: calc(100vh - 130px);
+    }
+    
+    .nav-menu .nav-link {
+        display: block;
+        padding: 1rem;
+        margin: 0.25rem 0;
+        text-align: left;
+        border-radius: 8px;
+        background-color: transparent;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .nav-menu .nav-link:hover {
+        background-color: #b4e2ed;
+    }
+    
+    .dropdown {
+        width: 100%;
+    }
+    
+    .dropdown-content {
+        position: static;
+        display: none;
+        width: 100%;
+        box-shadow: none;
+        background: #f9f9f9;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+    }
+    
+    .dropdown:hover .dropdown-content,
+    .dropdown.active .dropdown-content {
+        display: block;
+    }
+    
+    .dropdown-content a {
+        padding: 0.75rem;
+        margin: 0.25rem 0;
+        border-radius: 4px;
+        background: white;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .mobile-phone {
+        display: block;
+        margin-top: 1rem;
+        padding: 1rem;
+        text-align: center;
+        background: #b4e2ed;
+        border-radius: 8px;
+    }
+    
+    /* Hero Section Mobile Styles */
+    .hero {
+        flex-direction: column !important;
+        padding: 3rem 1rem !important;
+        gap: 2rem !important;
+        text-align: center !important;
+    }
+    
+    .hero-content {
+        flex: none !important;
+        max-width: 100% !important;
+        padding-left: 0 !important;
+        text-align: center !important;
+        order: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .hero-content h1 {
+        font-size: 2rem !important;
+        margin-bottom: 1rem;
+        text-align: center !important;
+    }
+    
+    .hero-content p {
+        font-size: 1rem !important;
+        margin-bottom: 2rem;
+        text-align: center !important;
+    }
+    
+    .hero-button {
+        display: inline-block;
+        padding: 1rem 2rem;
+        font-size: 1rem;
+        border-radius: 30px;
+        text-align: center;
+        width: auto;
+        max-width: 300px;
+    }
+    
+    .hero-image {
+        order: 1;
+        flex: none;
+        margin-bottom: 0;
+    }
+    
+    .hero-image img {
+        max-width: 280px !important;
+        max-height: 200px !important;
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+}
 
 .gap {
     height: 100px;
@@ -368,8 +701,82 @@ nav {
 
 
 
+/* Announcements Section */
+.announcements {
+    background-color: #eaf6fb; /* soft light blue - same as after-hours */
+    color: #1e3a5f;
+    padding: 4rem 2rem;
+}
+
+.announcements-wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.announcement-placeholder {
+    text-align: center;
+    padding: 3rem 2rem;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.announcement-item {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-left: 4px solid #007BBA;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.announcement-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+
+.announcement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+}
+
+.announcement-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1e3a5f;
+    margin: 0;
+    flex: 1;
+}
+
+.announcement-date {
+    font-size: 0.85rem;
+    color: #6b7280;
+    white-space: nowrap;
+    margin-left: 1rem;
+}
+
+.announcement-content {
+    color: #3a4a5b;
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .announcement-header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .announcement-date {
+        margin-left: 0;
+        align-self: flex-start;
+    }
+}
+
 .uninsured-services {
-    background-color: #eaf6fb; /* soft light blue */
+    background-color: #f9f9f9; /* same as lab-services */
     color: #1e3a5f;
     padding: 4rem 2rem;
 }

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - OFMC</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/admin-login.css">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon" media="(prefers-color-scheme: light)">
+    <link rel="icon" href="assets/img/favicon-dark.ico" type="image/x-icon" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-form">
+            <div class="login-header">
+                <img src="assets/img/logo.jpg" alt="OFMC Logo">
+                <h1>Admin Login</h1>
+                <p>Access the administrative dashboard</p>
+            </div>
+            
+            <form id="adminLoginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="login-button" id="loginButton">
+                    Sign In
+                </button>
+                
+                <div id="errorMessage" class="error-message"></div>
+            </form>
+            
+            <div class="back-link">
+                <a href="index.html">← Back to Main Site</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Admin credentials (in production, this should be handled server-side)
+        const adminCredentials = {
+            'admin': '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', // SHA-256 of "admin123"
+            'doctor': '27cc6994fc1c01ce6659c6bddca9b69c4c6a9418065e612c69d110b3f7b11f8a', // SHA-256 of "hello123"
+            'staff': '10176e7b7b24d317acfcf8d2064cfd2f24e154f7b5a96603077d5ef813d6a6b6'  // SHA-256 of "staff123"
+        };
+
+        // Hash function for password verification
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        // Login form handler
+        document.getElementById('adminLoginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const loginButton = document.getElementById('loginButton');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Clear previous error
+            errorMessage.style.display = 'none';
+            
+            // Disable button during login
+            loginButton.disabled = true;
+            loginButton.textContent = 'Signing In...';
+            
+            try {
+                // Hash the entered password
+                const hashedPassword = await hashPassword(password);
+                
+                // Check credentials
+                if (adminCredentials[username] && adminCredentials[username] === hashedPassword) {
+                    // Store authentication info
+                    sessionStorage.setItem('adminAuthenticated', 'true');
+                    sessionStorage.setItem('adminUsername', username);
+                    sessionStorage.setItem('loginTime', new Date().toISOString());
+                    
+                    // Redirect to admin dashboard
+                    window.location.href = 'admin-dashboard.html';
+                } else {
+                    // Show error message
+                    errorMessage.textContent = 'Invalid username or password. Please try again.';
+                    errorMessage.style.display = 'block';
+                    
+                    // Clear password field
+                    document.getElementById('password').value = '';
+                }
+            } catch (error) {
+                errorMessage.textContent = 'An error occurred during login. Please try again.';
+                errorMessage.style.display = 'block';
+            }
+            
+            // Re-enable button
+            loginButton.disabled = false;
+            loginButton.textContent = 'Sign In';
+        });
+
+        // Check if already logged in
+        window.addEventListener('load', function() {
+            if (sessionStorage.getItem('adminAuthenticated') === 'true') {
+                window.location.href = 'admin-dashboard.html';
+            }
+        });
+
+        // Allow Enter key to submit
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('adminLoginForm').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+</body>
+</html>

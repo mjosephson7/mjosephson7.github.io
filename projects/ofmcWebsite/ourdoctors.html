@@ -19,6 +19,19 @@
     </head>
     <body id="backgroundFill">
 
+    <!-- Notification Banner -->
+    <div id="notificationBanner" class="notification-banner" style="display: none;">
+        <div class="banner-content">
+            <div class="banner-message">
+                <i class="banner-icon fa fa-exclamation-circle"></i>
+                <span id="bannerText">This is a notification banner</span>
+            </div>
+            <button class="banner-close" onclick="closeBanner()">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Sticky Navbar -->
     <header class="navbar">
         <div class="navbar-left">
@@ -31,9 +44,18 @@
             </div>
         </div>
         <div class="navbar-right">
-            <nav>
+            <!-- Hamburger Menu Button (Mobile Only) -->
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+            
+            <!-- Desktop Navigation Menu -->
+            <nav id="desktopMenu" class="nav-menu desktop-nav">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="index.html#ouroffice" class="nav-link">Our Office</a>
+                <a href="index.html#announcementsTag" class="nav-link">Announcements</a>
                 <a href="index.html#uninsuredTag" class="nav-link">Uninsured Services</a>
                 <a href="https://portal.healthmyself.net/ofmc/" target="_blank" class="nav-link">Pomelo</a>
                 <div class="dropdown">
@@ -44,14 +66,31 @@
                     <a href="#">Extra Tab</a>
                   </div>
                 </div>
-
             </nav>
-            <div class="phone">
+            
+            <!-- Mobile Navigation Menu -->
+            <nav id="mobileMenu" class="nav-menu mobile-nav">
+                <a href="index.html" class="nav-link" onclick="closeMobileMenu()">Home</a>
+                <a href="index.html#ouroffice" class="nav-link" onclick="closeMobileMenu()">Our Office</a>
+                <a href="index.html#announcementsTag" class="nav-link" onclick="closeMobileMenu()">Announcements</a>
+                <a href="index.html#uninsuredTag" class="nav-link" onclick="closeMobileMenu()">Uninsured Services</a>
+                <a href="https://portal.healthmyself.net/ofmc/" target="_blank" class="nav-link" onclick="closeMobileMenu()">Pomelo</a>
+                <a href="ourdoctors.html" class="nav-link" onclick="closeMobileMenu()">Our Doctors</a>
+                <a href="https://dafht.ca/" target="_blank" class="nav-link" onclick="closeMobileMenu()">DAHFT</a>
+                
+                <div class="phone mobile-phone">
+                  <a href="tel:5199388000">519-938-8000</a>
+                </div>
+            </nav>
+            
+            <!-- Desktop Phone Number -->
+            <div class="phone desktop-phone">
               <a href="tel:5199388000">519-938-8000</a>
             </div>
 
         </div>
     </header>
+
 
     <main>
       <!-- Our Doctors Section -->
@@ -78,7 +117,85 @@
     <!-- Footer -->
     <footer class="footer">
         <p>Created by NextVision Digital &copy; 2025</p>
+        <p style="margin-top: 0.5rem; font-size: 0.8rem;">
+            <a href="admin-login.html" style="color: #666; text-decoration: none;">Admin Access</a>
+        </p>
     </footer>
+
+    <script>
+
+        // Mobile menu functions
+        function toggleMobileMenu() {
+            console.log('Toggle menu clicked'); // Debug log
+            const menu = document.getElementById('mobileMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            console.log('Menu element:', menu); // Debug log
+            console.log('Button element:', menuBtn); // Debug log
+            
+            if (menu && menuBtn) {
+                menu.classList.toggle('active');
+                menuBtn.classList.toggle('active');
+                console.log('Menu active:', menu.classList.contains('active')); // Debug log
+            }
+        }
+        
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (menu && menuBtn) {
+                menu.classList.remove('active');
+                menuBtn.classList.remove('active');
+            }
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            
+            if (menu && menuBtn && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                closeMobileMenu();
+            }
+        });
+        
+        // Close mobile menu on window resize to desktop
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 1225) {
+                closeMobileMenu();
+            }
+        });
+
+        // Banner functions
+        function showBanner() {
+            const bannerSettings = JSON.parse(localStorage.getItem('bannerSettings'));
+            if (!bannerSettings || !bannerSettings.enabled) return;
+            
+            const banner = document.getElementById('notificationBanner');
+            const bannerText = document.getElementById('bannerText');
+            
+            if (banner && bannerText) {
+                bannerText.textContent = bannerSettings.message || 'Default banner message';
+                banner.className = `notification-banner ${bannerSettings.color || 'yellow'}`;
+                banner.style.display = 'block';
+                document.body.classList.add('banner-visible');
+            }
+        }
+        
+        function closeBanner() {
+            const banner = document.getElementById('notificationBanner');
+            if (banner) {
+                banner.style.display = 'none';
+                document.body.classList.remove('banner-visible');
+            }
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            showBanner();
+        });
+    </script>
 </body>
 
 </html>
