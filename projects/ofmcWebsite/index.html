@@ -253,19 +253,34 @@
         }
         
 
+        // API configuration
+        const API_BASE_URL = 'http://localhost:3001/api';
+
         // Banner functions
-        function showBanner() {
-            const bannerSettings = JSON.parse(localStorage.getItem('bannerSettings'));
-            if (!bannerSettings || !bannerSettings.enabled) return;
-            
-            const banner = document.getElementById('notificationBanner');
-            const bannerText = document.getElementById('bannerText');
-            
-            if (banner && bannerText) {
-                bannerText.textContent = bannerSettings.message || 'Default banner message';
-                banner.className = `notification-banner ${bannerSettings.color || 'yellow'}`;
-                banner.style.display = 'block';
-                document.body.classList.add('banner-visible');
+        async function showBanner() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/banner`);
+                
+                if (!response.ok) {
+                    console.warn('Failed to fetch banner settings');
+                    return;
+                }
+                
+                const bannerSettings = await response.json();
+                
+                if (!bannerSettings || !bannerSettings.enabled) return;
+                
+                const banner = document.getElementById('notificationBanner');
+                const bannerText = document.getElementById('bannerText');
+                
+                if (banner && bannerText) {
+                    bannerText.textContent = bannerSettings.message || 'Default banner message';
+                    banner.className = `notification-banner ${bannerSettings.color || 'yellow'}`;
+                    banner.style.display = 'block';
+                    document.body.classList.add('banner-visible');
+                }
+            } catch (error) {
+                console.warn('Error fetching banner settings:', error);
             }
         }
         
@@ -278,41 +293,63 @@
         }
 
         // Announcements functions
-        function loadAnnouncements() {
+        async function loadAnnouncements() {
             const announcementsContainer = document.getElementById('announcementsContainer');
-            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
             
-            if (announcements.length === 0) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/announcements`);
+                
+                if (!response.ok) {
+                    console.warn('Failed to fetch announcements');
+                    announcementsContainer.innerHTML = `
+                        <div class="announcement-placeholder">
+                            <p>No announcements at this time. Please check back later for updates.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const announcements = await response.json();
+                
+                if (announcements.length === 0) {
+                    announcementsContainer.innerHTML = `
+                        <div class="announcement-placeholder">
+                            <p>No announcements at this time. Please check back later for updates.</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                announcementsContainer.innerHTML = announcements.map(announcement => `
+                    <div class="announcement-item">
+                        <div class="announcement-header">
+                            <h3 class="announcement-title">${announcement.title}</h3>
+                            <span class="announcement-date">${announcement.date}</span>
+                        </div>
+                        <p class="announcement-content">${announcement.content}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.warn('Error fetching announcements:', error);
                 announcementsContainer.innerHTML = `
                     <div class="announcement-placeholder">
                         <p>No announcements at this time. Please check back later for updates.</p>
                     </div>
                 `;
-                return;
             }
-            
-            announcementsContainer.innerHTML = announcements.map(announcement => `
-                <div class="announcement-item">
-                    <div class="announcement-header">
-                        <h3 class="announcement-title">${announcement.title}</h3>
-                        <span class="announcement-date">${announcement.date}</span>
-                    </div>
-                    <p class="announcement-content">${announcement.content}</p>
-                </div>
-            `).join('');
         }
 
 
         // Check if already authenticated this session
-        window.onload = function() {
+        window.onload = async function() {
             if (sessionStorage.getItem('authenticated') === 'true') {
                 document.getElementById('passwordOverlay').style.display = 'none';
                 document.getElementById('mainContent').style.display = 'block';
             }
             
             // Load announcements and banner
-            loadAnnouncements();
-            showBanner();
+            await loadAnnouncements();
+            await showBanner();
         }
         
         // Mobile menu functions

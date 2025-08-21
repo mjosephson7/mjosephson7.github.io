@@ -141,8 +141,11 @@
 
 
 
+        // API configuration
+        const API_BASE_URL = 'http://localhost:3001/api';
+
         // Announcements management functions
-        function addAnnouncement() {
+        async function addAnnouncement() {
             const titleInput = document.getElementById('announcementTitle');
             const contentInput = document.getElementById('announcementContent');
             
@@ -154,84 +157,100 @@
                 return;
             }
             
-            // Get existing announcements
-            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
-            
-            // Create new announcement
-            const newAnnouncement = {
-                id: Date.now().toString(),
-                title: title,
-                content: content,
-                date: new Date().toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                })
-            };
-            
-            // Add to beginning of array (newest first)
-            announcements.unshift(newAnnouncement);
-            
-            // Save to localStorage
-            localStorage.setItem('announcements', JSON.stringify(announcements));
-            
-            // Clear form
-            titleInput.value = '';
-            contentInput.value = '';
-            
-            // Refresh display
-            displayAnnouncements();
-            
-            alert('Announcement added successfully!');
+            try {
+                const response = await fetch(`${API_BASE_URL}/announcements`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ title, content })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to add announcement');
+                }
+                
+                // Clear form
+                titleInput.value = '';
+                contentInput.value = '';
+                
+                // Refresh display
+                await displayAnnouncements();
+                
+                alert('Announcement added successfully!');
+            } catch (error) {
+                console.error('Error adding announcement:', error);
+                alert('Failed to add announcement. Please try again.');
+            }
         }
         
-        function deleteAnnouncement(id) {
+        async function deleteAnnouncement(id) {
             if (!confirm('Are you sure you want to delete this announcement?')) {
                 return;
             }
             
-            // Get existing announcements
-            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
-            
-            // Filter out the announcement to delete
-            const updatedAnnouncements = announcements.filter(announcement => announcement.id !== id);
-            
-            // Save updated list
-            localStorage.setItem('announcements', JSON.stringify(updatedAnnouncements));
-            
-            // Refresh display
-            displayAnnouncements();
+            try {
+                const response = await fetch(`${API_BASE_URL}/announcements/${id}`, {
+                    method: 'DELETE'
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to delete announcement');
+                }
+                
+                // Refresh display
+                await displayAnnouncements();
+            } catch (error) {
+                console.error('Error deleting announcement:', error);
+                alert('Failed to delete announcement. Please try again.');
+            }
         }
         
-        function displayAnnouncements() {
+        async function displayAnnouncements() {
             const announcementsList = document.getElementById('announcementsList');
-            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
             
-            if (announcements.length === 0) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/announcements`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch announcements');
+                }
+                
+                const announcements = await response.json();
+                
+                if (announcements.length === 0) {
+                    announcementsList.innerHTML = `
+                        <div style="text-align: center; color: #6b7280; padding: 1rem; font-style: italic;">
+                            No announcements created yet.
+                        </div>
+                    `;
+                    return;
+                }
+                
+                announcementsList.innerHTML = announcements.map(announcement => `
+                    <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; background: white;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                            <h5 style="margin: 0; color: #2d3748; font-weight: 600;">${announcement.title}</h5>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <span style="font-size: 0.8rem; color: #6b7280;">${announcement.date}</span>
+                                <button onclick="deleteAnnouncement('${announcement.id}')" style="background: #e53e3e; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">Delete</button>
+                            </div>
+                        </div>
+                        <p style="margin: 0; color: #4a5568; line-height: 1.5;">${announcement.content}</p>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error fetching announcements:', error);
                 announcementsList.innerHTML = `
-                    <div style="text-align: center; color: #6b7280; padding: 1rem; font-style: italic;">
-                        No announcements created yet.
+                    <div style="text-align: center; color: #e53e3e; padding: 1rem; font-style: italic;">
+                        Failed to load announcements. Please check if the server is running.
                     </div>
                 `;
-                return;
             }
-            
-            announcementsList.innerHTML = announcements.map(announcement => `
-                <div style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; background: white;">
-                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
-                        <h5 style="margin: 0; color: #2d3748; font-weight: 600;">${announcement.title}</h5>
-                        <div style="display: flex; gap: 0.5rem; align-items: center;">
-                            <span style="font-size: 0.8rem; color: #6b7280;">${announcement.date}</span>
-                            <button onclick="deleteAnnouncement('${announcement.id}')" style="background: #e53e3e; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; cursor: pointer;">Delete</button>
-                        </div>
-                    </div>
-                    <p style="margin: 0; color: #4a5568; line-height: 1.5;">${announcement.content}</p>
-                </div>
-            `).join('');
         }
 
         // Banner management functions
-        function saveBannerSettings() {
+        async function saveBannerSettings() {
             const enabled = document.getElementById('bannerEnabled').checked;
             const color = document.getElementById('bannerColor').value;
             const message = document.getElementById('bannerMessage').value.trim();
@@ -247,9 +266,25 @@
                 message: message
             };
             
-            localStorage.setItem('bannerSettings', JSON.stringify(bannerSettings));
-            updateBannerStatus();
-            alert('Banner settings saved successfully!');
+            try {
+                const response = await fetch(`${API_BASE_URL}/banner`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bannerSettings)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to save banner settings');
+                }
+                
+                await updateBannerStatus();
+                alert('Banner settings saved successfully!');
+            } catch (error) {
+                console.error('Error saving banner settings:', error);
+                alert('Failed to save banner settings. Please try again.');
+            }
         }
         
         function previewBanner() {
@@ -300,44 +335,75 @@
             }
         }
         
-        function loadBannerSettings() {
-            const bannerSettings = JSON.parse(localStorage.getItem('bannerSettings') || '{}');
-            
-            document.getElementById('bannerEnabled').checked = bannerSettings.enabled || false;
-            document.getElementById('bannerColor').value = bannerSettings.color || 'yellow';
-            document.getElementById('bannerMessage').value = bannerSettings.message || '';
-            
-            updateBannerStatus();
+        async function loadBannerSettings() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/banner`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch banner settings');
+                }
+                
+                const bannerSettings = await response.json();
+                
+                document.getElementById('bannerEnabled').checked = bannerSettings.enabled || false;
+                document.getElementById('bannerColor').value = bannerSettings.color || 'yellow';
+                document.getElementById('bannerMessage').value = bannerSettings.message || '';
+                
+                await updateBannerStatus();
+            } catch (error) {
+                console.error('Error loading banner settings:', error);
+                // Set default values if API fails
+                document.getElementById('bannerEnabled').checked = false;
+                document.getElementById('bannerColor').value = 'yellow';
+                document.getElementById('bannerMessage').value = '';
+            }
         }
         
-        function updateBannerStatus() {
-            const bannerSettings = JSON.parse(localStorage.getItem('bannerSettings') || '{}');
+        async function updateBannerStatus() {
             const statusDiv = document.getElementById('bannerStatus');
             
-            if (bannerSettings.enabled && bannerSettings.message) {
-                statusDiv.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #22c55e;"></span>
-                        <span style="font-weight: 500; color: #22c55e;">Banner is active</span>
-                    </div>
-                    <p style="margin: 0; color: #4a5568;"><strong>Color:</strong> ${bannerSettings.color.charAt(0).toUpperCase() + bannerSettings.color.slice(1)}</p>
-                    <p style="margin: 0; color: #4a5568;"><strong>Message:</strong> ${bannerSettings.message}</p>
-                `;
-            } else {
+            try {
+                const response = await fetch(`${API_BASE_URL}/banner`);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch banner settings');
+                }
+                
+                const bannerSettings = await response.json();
+                
+                if (bannerSettings.enabled && bannerSettings.message) {
+                    statusDiv.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #22c55e;"></span>
+                            <span style="font-weight: 500; color: #22c55e;">Banner is active</span>
+                        </div>
+                        <p style="margin: 0; color: #4a5568;"><strong>Color:</strong> ${bannerSettings.color.charAt(0).toUpperCase() + bannerSettings.color.slice(1)}</p>
+                        <p style="margin: 0; color: #4a5568;"><strong>Message:</strong> ${bannerSettings.message}</p>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div style="display: flex; align-items: center; gap: 0.5rem;">
+                            <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #6b7280;"></span>
+                            <span style="font-weight: 500; color: #6b7280;">Banner is disabled</span>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error updating banner status:', error);
                 statusDiv.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #6b7280;"></span>
-                        <span style="font-weight: 500; color: #6b7280;">Banner is disabled</span>
+                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background-color: #e53e3e;"></span>
+                        <span style="font-weight: 500; color: #e53e3e;">Unable to connect to server</span>
                     </div>
                 `;
             }
         }
 
         // Initialize on page load
-        window.addEventListener('load', function() {
+        window.addEventListener('load', async function() {
             checkAuthentication();
-            displayAnnouncements();
-            loadBannerSettings();
+            await displayAnnouncements();
+            await loadBannerSettings();
         });
 
         // Update activity every 30 seconds
