@@ -15,6 +15,9 @@
 
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        
+        <!-- Firebase SDK -->
+        <script type="module" src="firebase-config.js"></script>
 
     </head>
     <body id="backgroundFill">
@@ -253,20 +256,18 @@
         }
         
 
-        // API configuration
-        const API_BASE_URL = 'http://localhost:3001/api';
-
-        // Banner functions
+        // Firebase banner functions
         async function showBanner() {
             try {
-                const response = await fetch(`${API_BASE_URL}/banner`);
+                const docRef = window.firebaseDoc(window.firebaseDB, 'settings', 'banner');
+                const docSnap = await window.firebaseGetDoc(docRef);
                 
-                if (!response.ok) {
-                    console.warn('Failed to fetch banner settings');
+                if (!docSnap.exists()) {
+                    console.warn('Banner settings not found');
                     return;
                 }
                 
-                const bannerSettings = await response.json();
+                const bannerSettings = docSnap.data();
                 
                 if (!bannerSettings || !bannerSettings.enabled) return;
                 
@@ -292,24 +293,20 @@
             }
         }
 
-        // Announcements functions
+        // Firebase announcements functions
         async function loadAnnouncements() {
             const announcementsContainer = document.getElementById('announcementsContainer');
             
             try {
-                const response = await fetch(`${API_BASE_URL}/announcements`);
+                const querySnapshot = await window.firebaseGetDocs(window.firebaseCollection(window.firebaseDB, 'announcements'));
+                const announcements = [];
                 
-                if (!response.ok) {
-                    console.warn('Failed to fetch announcements');
-                    announcementsContainer.innerHTML = `
-                        <div class="announcement-placeholder">
-                            <p>No announcements at this time. Please check back later for updates.</p>
-                        </div>
-                    `;
-                    return;
-                }
+                querySnapshot.forEach((doc) => {
+                    announcements.push({ id: doc.id, ...doc.data() });
+                });
                 
-                const announcements = await response.json();
+                // Sort by timestamp (newest first)
+                announcements.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
                 
                 if (announcements.length === 0) {
                     announcementsContainer.innerHTML = `
