@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockTracker Pro</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Stock Ticker -->
+    <div class="ticker-container">
+        <div class="ticker-content" id="tickerContent">
+            <!-- Ticker items will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="header">
+            <div class="logo">📈 StockTracker Pro</div>
+            <p class="subtitle">Real-time stock monitoring and portfolio management</p>
+        </div>
+
+        <div class="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Favorite Stocks</div>
+                    <div class="stat-value" id="totalStocks">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Portfolio Value</div>
+                    <div class="stat-value" id="portfolioValue">$0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Today's Change</div>
+                    <div class="stat-value" id="todayChange">$0.00</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Market Status</div>
+                    <div class="stat-value" style="color: #4caf50;">Active</div>
+                </div>
+            </div>
+
+            <div class="stocks-section">
+                <div class="section-header">
+                    <div class="section-title">Your Favorite Stocks</div>
+                    <button id="addStockBtn" class="add-stock-btn">+ Add Stock</button>
+                </div>
+
+                <div id="addStockForm" class="add-stock-form">
+                    <div class="form-row">
+                        <div style="flex: 1;">
+                            <label for="stockSymbol">Stock Symbol</label>
+                            <input type="text" id="stockSymbol" placeholder="Enter symbol (e.g., AAPL, GOOGL)" style="text-transform: uppercase;">
+                        </div>
+                        <button id="addBtn" class="add-btn">Add Stock</button>
+                    </div>
+                </div>
+
+                <div id="stocksList" class="stocks-grid">
+                    <div class="loading">Add some stocks to get started!</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application state
+        let favoriteStocks = [];
+        
+        // Extended stock data with more companies for ticker
+        const stockData = {
+            'AAPL': { name: 'Apple Inc.', price: 182.52, change: 2.34, changePercent: 1.30 },
+            'GOOGL': { name: 'Alphabet Inc.', price: 140.93, change: -1.23, changePercent: -0.86 },
+            'MSFT': { name: 'Microsoft Corporation', price: 415.26, change: 5.67, changePercent: 1.38 },
+            'TSLA': { name: 'Tesla, Inc.', price: 248.50, change: -3.21, changePercent: -1.28 },
+            'AMZN': { name: 'Amazon.com Inc.', price: 145.86, change: 0.92, changePercent: 0.63 },
+            'NVDA': { name: 'NVIDIA Corporation', price: 875.30, change: 12.45, changePercent: 1.44 },
+            'META': { name: 'Meta Platforms Inc.', price: 511.11, change: -2.89, changePercent: -0.56 },
+            'NFLX': { name: 'Netflix Inc.', price: 492.05, change: 8.22, changePercent: 1.70 },
+            'JPM': { name: 'JPMorgan Chase & Co.', price: 165.43, change: 1.87, changePercent: 1.14 },
+            'V': { name: 'Visa Inc.', price: 278.91, change: -0.45, changePercent: -0.16 },
+            'JNJ': { name: 'Johnson & Johnson', price: 162.78, change: 0.34, changePercent: 0.21 },
+            'WMT': { name: 'Walmart Inc.', price: 158.27, change: 2.11, changePercent: 1.35 },
+            'PG': { name: 'Procter & Gamble Co.', price: 154.89, change: -0.78, changePercent: -0.50 },
+            'UNH': { name: 'UnitedHealth Group Inc.', price: 521.33, change: 4.56, changePercent: 0.88 },
+            'DIS': { name: 'The Walt Disney Company', price: 96.47, change: -1.34, changePercent: -1.37 },
+            'HD': { name: 'The Home Depot Inc.', price: 345.67, change: 3.21, changePercent: 0.94 },
+            'BAC': { name: 'Bank of America Corp.', price: 33.84, change: 0.67, changePercent: 2.02 },
+            'XOM': { name: 'Exxon Mobil Corporation', price: 118.92, change: -2.14, changePercent: -1.77 }
+        };
+
+        // All stocks for ticker (will show all available stocks)
+        const tickerStocks = Object.keys(stockData);
+
+        // DOM elements
+        const addStockBtn = document.getElementById('addStockBtn');
+        const addStockForm = document.getElementById('addStockForm');
+        const addBtn = document.getElementById('addBtn');
+        const stocksList = document.getElementById('stocksList');
+        const tickerContent = document.getElementById('tickerContent');
+
+        // Initialize with some default stocks
+        favoriteStocks = ['AAPL', 'GOOGL', 'MSFT', 'TSLA'];
+
+        // Initialize the application
+        function init() {
+            updateDashboard();
+            updateTicker();
+            
+            // Update ticker every 10 seconds with slight price variations
+            setInterval(() => {
+                simulateMarketMovement();
+                updateTicker();
+                if (favoriteStocks.length > 0) {
+                    updateDashboard();
+                }
+            }, 10000);
+        }
+
+        // Simulate small market movements
+        function simulateMarketMovement() {
+            Object.keys(stockData).forEach(symbol => {
+                const stock = stockData[symbol];
+                const variation = (Math.random() - 0.5) * 2; // -1 to +1
+                stock.price += variation;
+                stock.change += variation * 0.5;
+                stock.changePercent = (stock.change / (stock.price - stock.change)) * 100;
+            });
+        }
+
+        // Update ticker with all available stocks
+        function updateTicker() {
+            const tickerHTML = tickerStocks.map(symbol => {
+                const stock = stockData[symbol];
+                const changeClass = stock.change >= 0 ? 'ticker-positive' : 'ticker-negative';
+                const changeSign = stock.change >= 0 ? '+' : '';
+                
+                return `
+                    <div class="ticker-item">
+                        <span class="ticker-symbol">${symbol}</span>
+                        <span class="ticker-price">$${stock.price.toFixed(2)}</span>
+                        <span class="ticker-change ${changeClass}">
+                            ${changeSign}${stock.change.toFixed(2)} (${changeSign}${stock.changePercent.toFixed(2)}%)
+                        </span>
+                    </div>
+                `;
+            }).join('');
+            
+            tickerContent.innerHTML = tickerHTML + tickerHTML; // Duplicate for seamless loop
+        }
+
+        // Add stock form toggle
+        addStockBtn.addEventListener('click', function() {
+            const form = document.getElementById('addStockForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            if (form.style.display === 'block') {
+                document.getElementById('stockSymbol').focus();
+            }
+        });
+
+        // Add stock handler
+        addBtn.addEventListener('click', function() {
+            const symbol = document.getElementById('stockSymbol').value.trim().toUpperCase();
+            
+            if (symbol && stockData[symbol] && !favoriteStocks.includes(symbol)) {
+                favoriteStocks.push(symbol);
+                document.getElementById('stockSymbol').value = '';
+                document.getElementById('addStockForm').style.display = 'none';
+                updateDashboard();
+            } else if (favoriteStocks.includes(symbol)) {
+                alert('Stock already in your favorites!');
+            } else {
+                alert('Stock symbol not found. Available symbols: ' + Object.keys(stockData).join(', '));
+            }
+        });
+
+        // Update dashboard data
+        function updateDashboard() {
+            updateStats();
+            updateStocksList();
+        }
+
+        // Update statistics
+        function updateStats() {
+            const totalStocks = favoriteStocks.length;
+            let portfolioValue = 0;
+            let todayChange = 0;
+
+            favoriteStocks.forEach(symbol => {
+                const stock = stockData[symbol];
+                if (stock) {
+                    portfolioValue += stock.price;
+                    todayChange += stock.change;
+                }
+            });
+
+            document.getElementById('totalStocks').textContent = totalStocks;
+            document.getElementById('portfolioValue').textContent = `$${portfolioValue.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+            
+            const changeElement = document.getElementById('todayChange');
+            changeElement.textContent = `${todayChange >= 0 ? '+' : ''}$${todayChange.toFixed(2)}`;
+            changeElement.className = todayChange >= 0 ? 'stat-value positive' : 'stat-value negative';
+        }
+
+        // Update stocks list
+        function updateStocksList() {
+            if (favoriteStocks.length === 0) {
+                stocksList.innerHTML = '<div class="loading">Add some stocks to get started!</div>';
+                return;
+            }
+
+            stocksList.innerHTML = favoriteStocks.map(symbol => {
+                const stock = stockData[symbol];
+                if (!stock) return '';
+
+                const changeClass = stock.change >= 0 ? 'positive' : 'negative';
+                const changeSign = stock.change >= 0 ? '+' : '';
+
+                return `
+                    <div class="stock-card">
+                        <div class="stock-header">
+                            <div class="stock-symbol">${symbol}</div>
+                            <button class="remove-btn" onclick="removeStock('${symbol}')">Remove</button>
+                        </div>
+                        <div class="stock-name">${stock.name}</div>
+                        <div class="stock-price">$${stock.price.toFixed(2)}</div>
+                        <div class="stock-change ${changeClass}">
+                            ${changeSign}$${Math.abs(stock.change).toFixed(2)} (${changeSign}${stock.changePercent.toFixed(2)}%)
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Remove stock function
+        function removeStock(symbol) {
+            favoriteStocks = favoriteStocks.filter(s => s !== symbol);
+            updateDashboard();
+        }
+
+        // Allow Enter key to add stock
+        document.getElementById('stockSymbol').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addBtn.click();
+            }
+        });
+
+        // Initialize the application
+        init();
+    </script>
+</body>
+</html>
