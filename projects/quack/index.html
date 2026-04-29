@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quack - The Party Bluffing Game</title>
+    <style>
+        :root {
+            --primary: #d97706;
+            --secondary: #92400e;
+            --accent: #fbbf24;
+            --bg: #fffbeb;
+            --text: #1c1917;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.025em;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+        .container {
+            max-width: 1000px;
+            margin: -3rem auto 0;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            border: 1px solid #fde68a;
+        }
+
+        .feature-card h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--secondary);
+        }
+
+        .feature-card p {
+            color: #78716c;
+        }
+
+        .icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+        .how-it-works {
+            max-width: 1000px;
+            margin: 4rem auto 0;
+            padding: 0 2rem;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--secondary);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            counter-reset: steps;
+        }
+
+        .step {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--accent);
+            color: var(--secondary);
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .step p {
+            font-size: 0.9rem;
+            color: #78716c;
+        }
+
+        .footer {
+            margin-top: 5rem;
+            padding: 2rem;
+            text-align: center;
+            color: #a8a29e;
+            font-size: 0.9rem;
+            border-top: 1px solid #fde68a;
+        }
+
+        .footer a { color: var(--secondary); text-decoration: none; font-weight: 500; }
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1>🦆 Quack</h1>
+        <p>The pass-the-phone party game where one player is secretly the Quack — and everyone else is trying to find them out.</p>
+        <a href="#" class="cta-button">Download on App Store</a>
+    </section>
+
+    <div class="container">
+        <div class="features">
+            <div class="feature-card">
+                <span class="icon">🤫</span>
+                <h2>One Secret Impostor</h2>
+                <p>Everyone sees the secret word — except the Quack, who only gets a category hint. Or nothing at all.</p>
+            </div>
+            <div class="feature-card">
+                <span class="icon">🗣️</span>
+                <h2>Question Everyone</h2>
+                <p>Players take turns questioning each other. Can the Quack fake it convincingly enough to survive?</p>
+            </div>
+            <div class="feature-card">
+                <span class="icon">🎉</span>
+                <h2>Pass &amp; Play</h2>
+                <p>No extra devices needed. Just one phone, a group of friends, and a whole lot of suspicion.</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Pass the Phone</h3>
+                <p>Each player peeks at their screen privately — most see the secret word, one sees nothing.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Ask Questions</h3>
+                <p>Players question each other about the word. The Quack has to bluff their way through.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Vote &amp; Reveal</h3>
+                <p>Everyone votes on who they think is the Quack. Then the truth comes out.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Play Again</h3>
+                <p>Roles shuffle every round. Anyone can be the Quack next.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 Quack. All rights reserved.</p>
+        <br>
+        <p>
+            <a href="../index.html">← Back to Projects</a> &bull;
+            <a href="privacy.html">Privacy Policy</a>
+        </p>
+    </footer>
+
+</body>
+</html>
