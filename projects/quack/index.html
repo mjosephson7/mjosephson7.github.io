@@ -3,224 +3,349 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quack - The Party Bluffing Game</title>
+    <title>Quack - Who's The Fake?</title>
     <style>
         :root {
-            --primary: #d97706;
-            --secondary: #92400e;
-            --accent: #fbbf24;
-            --bg: #fffbeb;
-            --text: #1c1917;
+            --yellow: #FFE143;
+            --green: #7FD356;
+            --green-dark: #5cb83a;
+            --black: #1a1a1a;
+            --cream: #FFFCEF;
+            --white: #ffffff;
+            --muted: #6b6b6b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            line-height: 1.6;
+            font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--yellow);
+            color: var(--black);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem 3rem;
         }
 
         .hero {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 6rem 2rem;
+            background: var(--black);
+            color: var(--white);
+            border: 4px solid var(--black);
+            border-radius: 18px;
+            padding: 2.5rem 1.5rem;
             text-align: center;
+            box-shadow: 0 6px 0 var(--black);
+            margin-bottom: 1.5rem;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: clamp(3rem, 12vw, 5.5rem);
+            font-weight: 900;
+            letter-spacing: 0.04em;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .tag {
+            color: var(--yellow);
             font-weight: 700;
+            font-size: clamp(0.9rem, 3vw, 1.15rem);
+            letter-spacing: 0.4em;
+            text-transform: uppercase;
+        }
+
+        .card {
+            background: var(--cream);
+            border: 4px solid var(--black);
+            border-radius: 14px;
+            padding: 1.25rem 1.5rem;
             margin-bottom: 1rem;
-            letter-spacing: -0.025em;
+            box-shadow: 0 5px 0 var(--black);
         }
 
-        .hero p {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
+        .card-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
         }
 
-        .cta-button {
-            display: inline-block;
-            background: white;
-            color: var(--primary);
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
+        .label {
+            font-weight: 800;
+            font-size: 1.05rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .label .num {
+            color: var(--muted);
+            margin-right: 0.35rem;
+        }
+
+        .sub {
+            color: var(--muted);
+            font-size: 0.9rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
             font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.2s;
+            margin-top: 0.4rem;
         }
 
-        .cta-button:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: var(--green);
+            color: var(--black);
+            border: 3px solid var(--black);
+            border-radius: 10px;
+            padding: 0.75rem 1.4rem;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: transform 0.08s, box-shadow 0.08s;
+            box-shadow: 0 4px 0 var(--black);
+        }
 
-        .container {
-            max-width: 1000px;
-            margin: -3rem auto 0;
-            padding: 0 2rem;
-            position: relative;
+        .btn:hover {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 var(--black);
+        }
+
+        .btn-block {
+            display: flex;
+            width: 100%;
+            padding: 1.1rem 1.4rem;
+            font-size: 1.1rem;
+        }
+
+        .btn-start {
+            font-size: 1.5rem;
+            padding: 1.4rem;
+            letter-spacing: 0.18em;
         }
 
         .features {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0 1.5rem;
         }
 
-        .feature-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        .feature {
+            background: var(--white);
+            border: 4px solid var(--black);
+            border-radius: 14px;
+            padding: 1.5rem 1.25rem;
             text-align: center;
-            border: 1px solid #fde68a;
+            box-shadow: 0 5px 0 var(--black);
         }
 
-        .feature-card h2 {
-            font-size: 1.25rem;
-            margin-bottom: 0.75rem;
-            color: var(--secondary);
+        .feature .icon {
+            font-size: 2.25rem;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
-        .feature-card p {
-            color: #78716c;
+        .feature h3 {
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.4rem;
         }
 
-        .icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
-
-        .how-it-works {
-            max-width: 1000px;
-            margin: 4rem auto 0;
-            padding: 0 2rem;
+        .feature p {
+            font-size: 0.9rem;
+            color: var(--muted);
         }
 
-        .how-it-works h2 {
+        .section-title {
             text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            color: var(--secondary);
+            font-size: 1.4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            margin: 2rem 0 1rem;
         }
 
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            counter-reset: steps;
+            gap: 0.75rem;
         }
 
         .step {
-            text-align: center;
-            padding: 1.5rem;
+            background: var(--white);
+            border: 4px solid var(--black);
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 4px 0 var(--black);
         }
 
-        .step-number {
+        .step-num {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--green);
+            border: 3px solid var(--black);
+            border-radius: 8px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 2.5rem;
-            height: 2.5rem;
-            background: var(--accent);
-            color: var(--secondary);
-            border-radius: 50%;
-            font-weight: 700;
+            font-weight: 900;
             font-size: 1.1rem;
-            margin-bottom: 1rem;
         }
 
-        .step h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--secondary);
+        .step-text h4 {
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.15rem;
         }
 
-        .step p {
-            font-size: 0.9rem;
-            color: #78716c;
+        .step-text p {
+            font-size: 0.88rem;
+            color: var(--muted);
         }
 
         .footer {
-            margin-top: 5rem;
-            padding: 2rem;
+            margin-top: 2.5rem;
             text-align: center;
-            color: #a8a29e;
-            font-size: 0.9rem;
-            border-top: 1px solid #fde68a;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
         }
 
-        .footer a { color: var(--secondary); text-decoration: none; font-weight: 500; }
-        .footer a:hover { text-decoration: underline; }
+        .footer a {
+            color: var(--black);
+            text-decoration: none;
+            border-bottom: 2px solid var(--black);
+            padding-bottom: 1px;
+        }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
+        .footer a:hover { background: var(--black); color: var(--yellow); }
+
+        .footer .sep { margin: 0 0.5rem; opacity: 0.5; }
+
+        .footer .copy {
+            color: var(--muted);
+            margin-top: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            text-transform: none;
+        }
+
+        @media (max-width: 480px) {
+            .step { gap: 0.75rem; }
+            .btn-start { font-size: 1.25rem; }
         }
     </style>
 </head>
 <body>
 
-    <section class="hero">
-        <h1>🦆 Quack</h1>
-        <p>The pass-the-phone party game where one player is secretly the Quack — and everyone else is trying to find them out.</p>
-        <a href="#" class="cta-button">Download on App Store</a>
-    </section>
+    <div class="wrap">
 
-    <div class="container">
+        <section class="hero">
+            <h1>QUACK!</h1>
+            <div class="tag">Who's the Fake?</div>
+        </section>
+
+        <a href="https://apps.apple.com/ca/app/quack/id6762577678" class="btn btn-block btn-start">
+            Download ▸
+        </a>
+
+        <div class="card" style="margin-top: 1.5rem;">
+            <div class="label"><span class="num">P1 ·</span>THE PITCH</div>
+            <p style="margin-top: 0.6rem; color: var(--muted); font-size: 0.95rem;">
+                One player is secretly the Quack. Everyone else knows the secret word. Question, bluff, and vote — find the fake before they fool you all.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="label"><span class="num">P2 ·</span>FAKES</div>
+            <div class="sub">1 Quack · Need 6+ for 2</div>
+        </div>
+
+        <div class="card">
+            <div class="card-row">
+                <div class="label"><span class="num">P3 ·</span>THE GAME</div>
+            </div>
+            <div class="sub">Pass · Bluff · Vote</div>
+        </div>
+
         <div class="features">
-            <div class="feature-card">
+            <div class="feature">
                 <span class="icon">🤫</span>
-                <h2>One Secret Impostor</h2>
-                <p>Everyone sees the secret word — except the Quack, who only gets a category hint. Or nothing at all.</p>
+                <h3>One Impostor</h3>
+                <p>Everyone sees the word — except the Quack, who's flying blind.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature">
                 <span class="icon">🗣️</span>
-                <h2>Question Everyone</h2>
-                <p>Players take turns questioning each other. Can the Quack fake it convincingly enough to survive?</p>
+                <h3>Bluff & Probe</h3>
+                <p>Question each other in turn. The Quack has to fake it.</p>
             </div>
-            <div class="feature-card">
+            <div class="feature">
                 <span class="icon">🎉</span>
-                <h2>Pass &amp; Play</h2>
-                <p>No extra devices needed. Just one phone, a group of friends, and a whole lot of suspicion.</p>
+                <h3>Pass & Play</h3>
+                <p>One phone, your friends, and a whole lot of suspicion.</p>
             </div>
         </div>
-    </div>
 
-    <section class="how-it-works">
-        <h2>How It Works</h2>
+        <div class="section-title">How To Play</div>
+
         <div class="steps">
             <div class="step">
-                <div class="step-number">1</div>
-                <h3>Pass the Phone</h3>
-                <p>Each player peeks at their screen privately — most see the secret word, one sees nothing.</p>
+                <div class="step-num">1</div>
+                <div class="step-text">
+                    <h4>Pass The Phone</h4>
+                    <p>Each player peeks privately. Most see the secret word — one sees nothing.</p>
+                </div>
             </div>
             <div class="step">
-                <div class="step-number">2</div>
-                <h3>Ask Questions</h3>
-                <p>Players question each other about the word. The Quack has to bluff their way through.</p>
+                <div class="step-num">2</div>
+                <div class="step-text">
+                    <h4>Ask Questions</h4>
+                    <p>Take turns probing. The Quack has to bluff their way through.</p>
+                </div>
             </div>
             <div class="step">
-                <div class="step-number">3</div>
-                <h3>Vote &amp; Reveal</h3>
-                <p>Everyone votes on who they think is the Quack. Then the truth comes out.</p>
+                <div class="step-num">3</div>
+                <div class="step-text">
+                    <h4>Vote & Reveal</h4>
+                    <p>Everyone picks a suspect. Then the truth comes out.</p>
+                </div>
             </div>
             <div class="step">
-                <div class="step-number">4</div>
-                <h3>Play Again</h3>
-                <p>Roles shuffle every round. Anyone can be the Quack next.</p>
+                <div class="step-num">4</div>
+                <div class="step-text">
+                    <h4>Play Again</h4>
+                    <p>Roles shuffle every round. Anyone can be the Quack next.</p>
+                </div>
             </div>
         </div>
-    </section>
 
-    <footer class="footer">
-        <p>&copy; 2026 Quack. All rights reserved.</p>
-        <br>
-        <p>
-            <a href="../index.html">← Back to Projects</a> &bull;
+        <footer class="footer" style="margin-top: 3rem;">
+            <a href="../index.html">← Projects</a>
+            <span class="sep">·</span>
             <a href="privacy.html">Privacy Policy</a>
-        </p>
-    </footer>
+            <div class="copy">&copy; 2026 Quack. All rights reserved.</div>
+        </footer>
+
+    </div>
 
 </body>
 </html>
